@@ -27,11 +27,17 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		// By JPA keyword
 		// List<Person> persons = (List<Person>) repository.findByProgrammingLanguage("Java");
 		// List<Person> persons = (List<Person>) repository.findByProgrammingLanguageAndName("Java", "Andres");
+		
 		// By @Query
 		List<Person> persons = (List<Person>) repository.customFindByProgrammingLanguageAndName("Java", "Andres");
 
 		persons.stream().forEach(person -> {
 			System.out.println(person);
+		});	
+		
+		List<Object[]> personsValue = repository.customFindAsObject();
+		personsValue.stream().forEach(person -> {
+			System.out.println(person[0] + " is an expert in " + person[1]);
 		});	
 	}
 

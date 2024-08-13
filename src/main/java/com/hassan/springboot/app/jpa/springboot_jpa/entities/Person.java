@@ -60,6 +60,5 @@ public class Person {
         return "[id=" + id + ", name=" + name + ", lastname=" + lastname + ", programmingLanguage="
                 + programmingLanguage + "]";
     }
-
-     
+    
 }
