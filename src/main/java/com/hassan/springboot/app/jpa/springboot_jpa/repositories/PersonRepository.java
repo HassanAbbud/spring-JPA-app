@@ -31,6 +31,10 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     @Query("SELECT p FROM Person p where p.id BETWEEN 2 AND 7 ORDER BY p.name DESC")
     List<Person> findAllBetweenIdOrder();
     
+    //Get total count 
+    @Query("SELECT COUNT(p) From Person p")
+    Long totalPerson();
+
     //Get MIN and MAX IDs
     @Query("SELECT MAX(p.id) FROM Person p")
     Long getMaxId();

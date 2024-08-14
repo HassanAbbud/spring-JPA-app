@@ -36,7 +36,7 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		// personalizedQuery();
 		// personalizedQueryDistinct();
 		// personalizedQueryBetweenId();
-		personalizedQueryGetMaxAndMin();
+		queriesFunctionAggregation();
 	}
 
 	@Transactional(readOnly = true)
@@ -158,7 +158,12 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 	}
 
 	@Transactional(readOnly = true)
-	public void personalizedQueryGetMaxAndMin(){
+	public void queriesFunctionAggregation(){
+		System.out.println("==========Find total of people in table==========");
+		Long count = repository.totalPerson();
+		System.out.println("Total count: " + count);
+
+		
 		System.out.println("==========Find between IDs==========");
 		Long maxId = repository.getMaxId();
 		Long minId = repository.getMinId();
