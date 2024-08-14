@@ -36,7 +36,8 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		// personalizedQuery();
 		// personalizedQueryDistinct();
 		// personalizedQueryBetweenId();
-		queriesFunctionAggregation();
+		// queriesFunctionAggregation();
+		subQueries();
 	}
 
 	@Transactional(readOnly = true)
@@ -170,8 +171,8 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		System.out.println("Minimum ID value is: " + minId + " Maximum ID value is: " + maxId);
 
 		System.out.println("==========Find longest/shortest names==========");
-		Integer longest = repository.getLongestName();
-		Integer shortest = repository.getShortestName();
+		Integer longest = repository.getLongestNameValue();
+		Integer shortest = repository.getShortestNameValue();
 		System.out.println("Longest name value is: " + longest + " characters long.");
 		System.out.println("Shortest name value is: " + shortest + " characters long.");
 
@@ -183,5 +184,20 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 				", sum=" + resumeReg[2] +
 				", avg=" + resumeReg[3] +
 		        ", count=" + resumeReg[4]);
+	}
+
+	@Transactional(readOnly = true)
+	public void subQueries(){
+		List<Object[]> shortestName = repository.findShortestName();
+
+		shortestName.forEach(name -> {
+			System.out.println("Shortest name is " + name[0]);
+			System.out.println("With " + name[1] + " characters");
+		});
+
+		Optional<Person> lastRegistry = repository.findLastRegistry();
+		lastRegistry.ifPresent(person -> System.out.println("Last registry: " + person));
+
+
 	}
 }

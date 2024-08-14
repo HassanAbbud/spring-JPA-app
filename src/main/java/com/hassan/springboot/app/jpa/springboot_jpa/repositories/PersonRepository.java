@@ -11,15 +11,20 @@ import com.hassan.springboot.app.jpa.springboot_jpa.entities.Person;
 
 public interface PersonRepository extends CrudRepository<Person, Long>{
 
+    //Sub Queries 
+    @Query("SELECT p.name, LENGTH(p.name) FROM Person p WHERE LENGTH(p.name)=(SELECT MIN(LENGTH(p.name)) FROM Person p)")
+    List<Object[]> findShortestName();
+    @Query("SELECT p FROM Person p WHERE p.id=(SELECT MAX(p.id) FROM Person p)")
+    Optional<Person> findLastRegistry();
     
-    @Query("SELECT p FROM Person p Where p.id=?1")
+    @Query("SELECT p FROM Person p WHERE p.id=?1")
     Optional<Person> findOne(Long id);
     
-    @Query("SELECT p FROM Person p Where p.name=?1")
+    @Query("SELECT p FROM Person p WHERE p.name=?1")
     Optional<Person> findOneName(String name);
     
     //Search by LIKE argument, % represent that it has to search left and right 
-    @Query("SELECT p FROM Person p Where p.name LIKE %?1%")
+    @Query("SELECT p FROM Person p WHERE p.name LIKE %?1%")
     Optional<Person> findOneLikeName(String name);
 
     // CONCAT and return a full names
@@ -28,7 +33,7 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     List<String> findAllFullConcatNames();
 
     // Find range of IDs ordered by name. Order can be ASC (default) or DESC
-    @Query("SELECT p FROM Person p where p.id BETWEEN 2 AND 7 ORDER BY p.name DESC")
+    @Query("SELECT p FROM Person p WHERE p.id BETWEEN 2 AND 7 ORDER BY p.name DESC")
     List<Person> findAllBetweenIdOrder();
     
     //Get total count 
@@ -44,13 +49,13 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
 
     // Find longest/shortest name
     @Query("SELECT MAX(LENGTH(p.name)) FROM Person p")
-    Integer getLongestName();
+    Integer getLongestNameValue();
     
     @Query("SELECT MIN(LENGTH(p.name)) FROM Person p")
-    Integer getShortestName();
+    Integer getShortestNameValue();
 
-    //
-    @Query("select MIN(p.id), MAX(p.id), SUM(p.id), AVG(length(p.name)), COUNT(p.id) FROM Person p")
+    // Find sum of IDs and average of name characters. Multiple queries in a single function. 
+    @Query("SELECT MIN(p.id), MAX(p.id), SUM(p.id), AVG(length(p.name)), COUNT(p.id) FROM Person p")
     public Object getSummaryAggregationFunction();
 
     // Find unique programming languages
