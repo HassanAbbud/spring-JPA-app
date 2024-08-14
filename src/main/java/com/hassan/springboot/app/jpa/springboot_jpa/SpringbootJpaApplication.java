@@ -1,14 +1,17 @@
 package com.hassan.springboot.app.jpa.springboot_jpa;
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hassan.springboot.app.jpa.springboot_jpa.entities.Person;
 import com.hassan.springboot.app.jpa.springboot_jpa.repositories.PersonRepository;
+
 
 @SpringBootApplication
 public class SpringbootJpaApplication implements CommandLineRunner{
@@ -28,6 +31,7 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		create();
 	}
 
+	@Transactional(readOnly = true)
 	public void list(){
 		// List<Person> persons = (List<Person>) repository.findAll();
 		// By JPA keyword
@@ -47,6 +51,7 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		});	
 	}
 
+	@Transactional(readOnly = true)
 	public void findOne(){
 		// Person person = null;
 		// Optional<Person> optionalPerson = repository.findById(5L);
@@ -62,10 +67,21 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		repository.findOneLikeName("ep").ifPresent(System.out::println);
 	}
 
+	@Transactional
 	public void create(){
-		Person person = new Person(null, "Ryan", "Smith", "Python");
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please input your name:");
+		String name = scanner.next();
+		System.out.println("Please input your last name:");
+		String lastName = scanner.next();
+		System.out.println("Please input your preferred programming language:");
+		String programmingLanguage = scanner.next();
+		scanner.close();
+
+		Person person = new Person(null, name, lastName, programmingLanguage);
 		Person newPerson = repository.save(person);
 
 		System.out.println(newPerson);
 	}
+
 }
