@@ -1,6 +1,7 @@
 package com.hassan.springboot.app.jpa.springboot_jpa;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,9 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 
 		// list();
-		this.findOne();
-		create();
+		// this.findOne();
+		// create();
+		update();
 	}
 
 	@Transactional(readOnly = true)
@@ -69,6 +71,8 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 
 	@Transactional
 	public void create(){
+		//Scanner is not used in production as it implies transaction timeout 
+		//risks, this is for testing purposes.
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Please input your name:");
 		String name = scanner.next();
@@ -84,4 +88,24 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		System.out.println(newPerson);
 	}
 
+	@Transactional
+	public void update(){
+		//Scanner is not used in production as it implies transaction timeout 
+		//risks, this is for testing purposes
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please input the ID to change:");
+		Long id = scanner.nextLong();
+
+		Optional<Person> optionalPerson = repository.findById(id); 
+
+		optionalPerson.ifPresent(p -> {
+			System.out.println(p);
+			System.out.println("Please input the programming language to update:");
+			String programmingLanguage = scanner.next();
+			p.setProgrammingLanguage(programmingLanguage);
+			repository.save(p);
+			System.out.println(p);
+		});
+		scanner.close();
+	}
 }
