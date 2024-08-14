@@ -27,8 +27,8 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     @Query("SELECT CONCAT(LOWER(p.name), ' ', UPPER(p.lastname)) FROM Person p")
     List<String> findAllFullConcatNames();
 
-    // Find range of IDs
-    @Query("SELECT p FROM Person p where p.id BETWEEN 2 AND 7 ORDER BY p.name")
+    // Find range of IDs ordered by name. Order can be ASC (default) or DESC
+    @Query("SELECT p FROM Person p where p.id BETWEEN 2 AND 7 ORDER BY p.name DESC")
     List<Person> findAllBetweenIdOrder();
 
     // Find unique programming languages
