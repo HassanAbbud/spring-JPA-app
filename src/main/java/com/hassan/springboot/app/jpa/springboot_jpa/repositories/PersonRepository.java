@@ -42,6 +42,13 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     @Query("SELECT MIN(p.id) FROM Person p")
     Long getMinId();
 
+    // Find longest/shortest name
+    @Query("SELECT MAX(LENGTH(p.name)) FROM Person p")
+    Integer getLongestName();
+    
+    @Query("SELECT MIN(LENGTH(p.name)) FROM Person p")
+    Integer getShortestName();
+
     // Find unique programming languages
     @Query("SELECT DISTINCT(p.programmingLanguage) FROM Person p")
     List<String> findAllProgramDistinct();

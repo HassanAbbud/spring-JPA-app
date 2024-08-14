@@ -167,7 +167,13 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		System.out.println("==========Find between IDs==========");
 		Long maxId = repository.getMaxId();
 		Long minId = repository.getMinId();
-
 		System.out.println("Minimum ID value is: " + minId + " Maximum ID value is: " + maxId);
+
+		System.out.println("==========Find longest/shortest names==========");
+		Integer longest = repository.getLongestName();
+		Integer shortest = repository.getShortestName();
+		System.out.println("Longest name value is: " + longest + " characters long.");
+		System.out.println("Shortest name value is: " + shortest + " characters long.");
+
 	}
 }
