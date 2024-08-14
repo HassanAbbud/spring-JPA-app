@@ -34,7 +34,8 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		// update();
 		// delete();
 		// personalizedQuery();
-		personalizedQueryDistinct();
+		// personalizedQueryDistinct();
+		personalizedQueryConcatLowerAndUpperCase();
 	}
 
 	@Transactional(readOnly = true)
@@ -134,8 +135,16 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 	@Transactional(readOnly = true)
 	public void personalizedQueryDistinct(){
 		System.out.println("==========Find unique names==========");
-		List<String> personsDto = repository.findAllProgramDistinct();
+		List<String> uniquePrograms = repository.findAllProgramDistinct();
 
-		personsDto.stream().forEach(System.out::println);
+		uniquePrograms.stream().forEach(System.out::println);
+	};	
+	
+	@Transactional(readOnly = true)
+	public void personalizedQueryConcatLowerAndUpperCase(){
+		System.out.println("==========Find unique names==========");
+		List<String> fullnameUpperLower = repository.findAllFullConcatNames();
+
+		fullnameUpperLower.stream().forEach(System.out::println);
 	};	
 }
