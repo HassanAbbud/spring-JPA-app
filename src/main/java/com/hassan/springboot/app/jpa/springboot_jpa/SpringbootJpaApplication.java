@@ -35,7 +35,8 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		// delete();
 		// personalizedQuery();
 		// personalizedQueryDistinct();
-		personalizedQueryBetweenId();
+		// personalizedQueryBetweenId();
+		personalizedQueryGetMaxAndMin();
 	}
 
 	@Transactional(readOnly = true)
@@ -154,5 +155,14 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		List<Person> personsBetween = repository.findAllBetweenIdOrder();
 
 		personsBetween.stream().forEach(System.out::println);
+	}
+
+	@Transactional(readOnly = true)
+	public void personalizedQueryGetMaxAndMin(){
+		System.out.println("==========Find between IDs==========");
+		Long maxId = repository.getMaxId();
+		Long minId = repository.getMinId();
+
+		System.out.println("Minimum ID value is: " + minId + " Maximum ID value is: " + maxId);
 	}
 }

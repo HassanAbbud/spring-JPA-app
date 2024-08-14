@@ -30,6 +30,13 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     // Find range of IDs ordered by name. Order can be ASC (default) or DESC
     @Query("SELECT p FROM Person p where p.id BETWEEN 2 AND 7 ORDER BY p.name DESC")
     List<Person> findAllBetweenIdOrder();
+    
+    //Get MIN and MAX IDs
+    @Query("SELECT MAX(p.id) FROM Person p")
+    Long getMaxId();
+    
+    @Query("SELECT MIN(p.id) FROM Person p")
+    Long getMinId();
 
     // Find unique programming languages
     @Query("SELECT DISTINCT(p.programmingLanguage) FROM Person p")
