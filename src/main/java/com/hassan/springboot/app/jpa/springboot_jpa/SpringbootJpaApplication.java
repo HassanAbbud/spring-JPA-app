@@ -175,5 +175,13 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		System.out.println("Longest name value is: " + longest + " characters long.");
 		System.out.println("Shortest name value is: " + shortest + " characters long.");
 
+		System.out.println("==========Consult aggregation functions: min, max, sum, avg, count==========");
+		Object[] resumeReg = (Object[]) repository.getSummaryAggregationFunction();
+		System.out.println(
+			    "min=" + resumeReg[0] +
+				", max=" + resumeReg[1] +
+				", sum=" + resumeReg[2] +
+				", avg=" + resumeReg[3] +
+		        ", count=" + resumeReg[4]);
 	}
 }
