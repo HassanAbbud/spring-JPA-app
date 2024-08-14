@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hassan.springboot.app.jpa.springboot_jpa.dto.PersonDto;
 import com.hassan.springboot.app.jpa.springboot_jpa.entities.Person;
 import com.hassan.springboot.app.jpa.springboot_jpa.repositories.PersonRepository;
 
@@ -29,9 +30,11 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 
 		// list();
 		// this.findOne();
-		create();
+		// create();
 		// update();
 		// delete();
+		// personalizedQuery();
+		personalizedQueryDistinct();
 	}
 
 	@Transactional(readOnly = true)
@@ -118,6 +121,21 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		repository.deleteById(id);
 
 		scanner.close();
-
 	}
+
+	@Transactional(readOnly = true)
+	public void personalizedQuery(){
+		System.out.println("=====Fill and return DTO object with Name and from DB=====");
+		List<PersonDto> personsDto = repository.findAllPersonDto();
+
+		personsDto.stream().forEach(System.out::println);
+	};	
+
+	@Transactional(readOnly = true)
+	public void personalizedQueryDistinct(){
+		System.out.println("==========Find unique names==========");
+		List<String> personsDto = repository.findAllProgramDistinct();
+
+		personsDto.stream().forEach(System.out::println);
+	};	
 }

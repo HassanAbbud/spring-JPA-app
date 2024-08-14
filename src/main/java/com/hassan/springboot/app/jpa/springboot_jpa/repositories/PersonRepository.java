@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import com.hassan.springboot.app.jpa.springboot_jpa.dto.PersonDto;
 import com.hassan.springboot.app.jpa.springboot_jpa.entities.Person;
 
 public interface PersonRepository extends CrudRepository<Person, Long>{
 
+    
     @Query("SELECT p FROM Person p Where p.id=?1")
     Optional<Person> findOne(Long id);
     
@@ -19,6 +21,10 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     //Search by LIKE argument, % represent that it has to search left and right 
     @Query("SELECT p FROM Person p Where p.name LIKE %?1%")
     Optional<Person> findOneLikeName(String name);
+
+    // Find unique programming languages
+    @Query("SELECT DISTINCT(p.programmingLanguage) FROM Person p")
+    List<String> findAllProgramDistinct();
 
     // Search LIKE argument with JPA keyword in method
     Optional<Person> findByNameContaining(String name);
@@ -34,5 +40,10 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     // Find specific fields instead of whole Object
     @Query("SELECT p.name, p.programmingLanguage FROM Person p")
     List<Object[]> customFindAsObject();
+
+    // Fill DTO from found attributes name & lastname
+    @Query("SELECT NEW com.hassan.springboot.app.jpa.springboot_jpa.dto.PersonDto(p.name, p.lastname) From Person p")
+    List<PersonDto> findAllPersonDto();
+
     
 }
