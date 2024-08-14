@@ -22,10 +22,14 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     @Query("SELECT p FROM Person p Where p.name LIKE %?1%")
     Optional<Person> findOneLikeName(String name);
 
-    // CONCAT and return a full name
+    // CONCAT and return a full names
     // @Query("SELECT p.name || ' ' || p.lastname FROM Person p")
     @Query("SELECT CONCAT(LOWER(p.name), ' ', UPPER(p.lastname)) FROM Person p")
     List<String> findAllFullConcatNames();
+
+    // Find range of IDs
+    @Query("SELECT p FROM Person p where p.id BETWEEN 2 AND 4")
+    List<Person> findAllBetweenId();
 
     // Find unique programming languages
     @Query("SELECT DISTINCT(p.programmingLanguage) FROM Person p")

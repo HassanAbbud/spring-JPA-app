@@ -35,7 +35,7 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		// delete();
 		// personalizedQuery();
 		// personalizedQueryDistinct();
-		personalizedQueryConcatLowerAndUpperCase();
+		personalizedQueryBetweenId();
 	}
 
 	@Transactional(readOnly = true)
@@ -147,4 +147,12 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 
 		fullnameUpperLower.stream().forEach(System.out::println);
 	};	
+
+	@Transactional(readOnly = true)
+	public void personalizedQueryBetweenId(){
+		System.out.println("==========Find between IDs==========");
+		List<Person> personsBetween = repository.findAllBetweenId();
+
+		personsBetween.stream().forEach(System.out::println);
+	}
 }
