@@ -16,6 +16,10 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     List<Object[]> findShortestName();
     @Query("SELECT p FROM Person p WHERE p.id=(SELECT MAX(p.id) FROM Person p)")
     Optional<Person> findLastRegistry();
+
+    //Where in
+    @Query("SELECT p FROM Person p WHERE p.id IN ?1")
+    List<Person> getPeopleById(List<Long> ids);
     
     @Query("SELECT p FROM Person p WHERE p.id=?1")
     Optional<Person> findOne(Long id);

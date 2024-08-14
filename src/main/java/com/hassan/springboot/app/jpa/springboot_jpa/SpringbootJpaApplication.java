@@ -1,5 +1,6 @@
 package com.hassan.springboot.app.jpa.springboot_jpa;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -37,7 +38,8 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		// personalizedQueryDistinct();
 		// personalizedQueryBetweenId();
 		// queriesFunctionAggregation();
-		subQueries();
+		// subQueries();
+		whereIn();
 	}
 
 	@Transactional(readOnly = true)
@@ -197,7 +199,11 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 
 		Optional<Person> lastRegistry = repository.findLastRegistry();
 		lastRegistry.ifPresent(person -> System.out.println("Last registry: " + person));
+	}
 
-
+	@Transactional(readOnly = true)
+	public void whereIn(){
+		List<Person> peopleIds = repository.getPeopleById(Arrays.asList(1L, 2L, 5L));
+		peopleIds.forEach(person -> System.out.println("Last registry: " + person));
 	}
 }
