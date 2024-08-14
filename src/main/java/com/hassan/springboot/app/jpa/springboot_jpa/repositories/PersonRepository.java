@@ -28,8 +28,8 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     List<String> findAllFullConcatNames();
 
     // Find range of IDs
-    @Query("SELECT p FROM Person p where p.id BETWEEN 2 AND 4")
-    List<Person> findAllBetweenId();
+    @Query("SELECT p FROM Person p where p.id BETWEEN 2 AND 7 ORDER BY p.name")
+    List<Person> findAllBetweenIdOrder();
 
     // Find unique programming languages
     @Query("SELECT DISTINCT(p.programmingLanguage) FROM Person p")

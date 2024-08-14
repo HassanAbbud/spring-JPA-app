@@ -71,7 +71,7 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		// System.out.println(person);
 
 		//repository.findById(1L).ifPresent(p -> System.out.println(p));
-		repository.findOneLikeName("ep").ifPresent(System.out::println);
+		repository.findOneLikeName("ep").ifPresent(System.out::println );
 	}
 
 	@Transactional
@@ -151,7 +151,7 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 	@Transactional(readOnly = true)
 	public void personalizedQueryBetweenId(){
 		System.out.println("==========Find between IDs==========");
-		List<Person> personsBetween = repository.findAllBetweenId();
+		List<Person> personsBetween = repository.findAllBetweenIdOrder();
 
 		personsBetween.stream().forEach(System.out::println);
 	}
