@@ -1,6 +1,7 @@
 package com.hassan.springboot.app.jpa.springboot_jpa.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -8,7 +9,21 @@ import org.springframework.data.repository.CrudRepository;
 import com.hassan.springboot.app.jpa.springboot_jpa.entities.Person;
 
 public interface PersonRepository extends CrudRepository<Person, Long>{
-    // Find via JPA method keywords (findby, Before, Or, And, etc.)
+
+    @Query("SELECT p FROM Person p Where p.id=?1")
+    Optional<Person> findOne(Long id);
+    
+    @Query("SELECT p FROM Person p Where p.name=?1")
+    Optional<Person> findOneName(String name);
+    
+    //Search by LIKE argument, % represent that it has to search left and right 
+    @Query("SELECT p FROM Person p Where p.name LIKE %?1%")
+    Optional<Person> findOneLikeName(String name);
+
+    // Search LIKE argument with JPA keyword in method
+    Optional<Person> findByNameContaining(String name);
+
+    // Find via JPA method keywords (findBy, Before, Or, And, etc.)
     List<Person> findByProgrammingLanguage(String programmingLanguage);
     List<Person> findByProgrammingLanguageAndName(String programmingLanguage, String name);
 
@@ -19,4 +34,5 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     // Find specific fields instead of whole Object
     @Query("SELECT p.name, p.programmingLanguage FROM Person p")
     List<Object[]> customFindAsObject();
+    
 }

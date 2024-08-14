@@ -24,8 +24,8 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 
 		// list();
-		findOne();
-
+		this.findOne();
+		create();
 	}
 
 	public void list(){
@@ -58,7 +58,14 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 		// Person person = repository.findById(8L).orElse(null);
 		// System.out.println(person);
 
-		repository.findById(8L).ifPresent(p -> System.out.println(p));
+		//repository.findById(1L).ifPresent(p -> System.out.println(p));
+		repository.findOneLikeName("ep").ifPresent(System.out::println);
 	}
 
+	public void create(){
+		Person person = new Person(null, "Ryan", "Smith", "Python");
+		Person newPerson = repository.save(person);
+
+		System.out.println(newPerson);
+	}
 }
