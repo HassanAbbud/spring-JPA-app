@@ -30,8 +30,8 @@ public class SpringbootJpaApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 
 		// list();
-		// this.findOne();
-		create();
+		this.findOne();
+		// create();
 		// update();
 		// delete();
 		// personalizedQuery();
