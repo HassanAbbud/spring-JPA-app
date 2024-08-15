@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Annotation to mark as primary key
     private Long id;
 
     private String name;
